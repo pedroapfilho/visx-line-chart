@@ -1,5 +1,5 @@
 {
-  "name": "visx-line",
+  "name": "visx-line-chart",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
