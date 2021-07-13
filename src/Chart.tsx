@@ -12,15 +12,11 @@ import { bisector, extent } from "d3-array";
 
 const data = appleStock.slice(0, 100);
 
-type TooltipDataType = AppleStock;
-
-type DataType = AppleStock;
-
 const getYValue = (d: AppleStock) => d.close;
 
 const getXValue = (d: AppleStock) => new Date(d.date);
 
-const bisectDate = bisector<DataType, Date>((d) => new Date(d.date)).left;
+const bisectDate = bisector<AppleStock, Date>((d) => new Date(d.date)).left;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -58,7 +54,7 @@ const Chart = () => {
     tooltipData,
     tooltipLeft = 0,
     tooltipTop = 0,
-  } = useTooltip<TooltipDataType>();
+  } = useTooltip<AppleStock>();
 
   const xScale = useMemo(
     () =>
@@ -87,7 +83,7 @@ const Chart = () => {
       <Container ref={ref}>
         <StyledSVG width={width} height={height} ref={ref}>
           <Group>
-            <LinePath<DataType>
+            <LinePath<AppleStock>
               data={data}
               x={(d) => xScale(getXValue(d)) ?? 0}
               y={(d) => yScale(getYValue(d)) ?? 0}
@@ -156,19 +152,17 @@ const Chart = () => {
         </StyledSVG>
 
         {tooltipData ? (
-          <Group>
-            <TooltipWithBounds
-              key={Math.random()}
-              top={tooltipTop}
-              left={tooltipLeft}
-              style={tooltipStyles}
-            >
-              <b>{`${timeFormat("%b %d, %Y")(
-                new Date(getXValue(tooltipData))
-              )}`}</b>
-              : ${getYValue(tooltipData)}
-            </TooltipWithBounds>
-          </Group>
+          <TooltipWithBounds
+            key={Math.random()}
+            top={tooltipTop}
+            left={tooltipLeft}
+            style={tooltipStyles}
+          >
+            <b>{`${timeFormat("%b %d, %Y")(
+              new Date(getXValue(tooltipData))
+            )}`}</b>
+            : ${getYValue(tooltipData)}
+          </TooltipWithBounds>
         ) : null}
       </Container>
     </Wrapper>
