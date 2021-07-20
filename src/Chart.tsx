@@ -30,6 +30,7 @@ const Container = styled.div`
   position: relative;
   width: 600px;
   height: 400px;
+  min-width: 300px;
 `;
 
 const StyledSVG = styled.svg`
@@ -81,7 +82,7 @@ const Chart = () => {
   return (
     <Wrapper>
       <Container ref={ref}>
-        <StyledSVG width={width} height={height} ref={ref}>
+        <StyledSVG width={width} height={height}>
           <Group>
             <LinePath<AppleStock>
               data={data}
